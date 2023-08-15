@@ -1,3 +1,4 @@
+// Iterative Approach
 #include<iostream>
 #include<vector>
 using namespace std;
@@ -34,4 +35,47 @@ int main() {
     cin >> x;
     int finalAns = binarySearch(n, arr, x);
     cout << finalAns << endl;
+}
+
+// Recursive Approach
+#include<iostream>
+#include<vector>
+using namespace std;
+
+int binarySearch(vector<int>& arr, int n, int start, int end, int target) {
+    while(start <= end) {
+        int mid = start + (end-start)/2;
+        if (arr[mid] ==  target) {
+            return mid;
+        }
+        if (arr[mid] < target) {
+            binarySearch(arr, n, mid+1, end, target);
+        }
+        else {
+            binarySearch(arr, n, start, mid-1, target);
+        }
+        mid = start + (end-start)/2;
+    }
+    return -1;
+}
+
+int main() {
+    int n;
+    cout << "Size of array: ";
+    cin >> n;
+    vector<int> arr(n);
+    cout << "Elements: ";
+    for(int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+    int x;
+    cout << "Enter the element to be searched? ";
+    cin >> x;
+    int finalAns = binarySearch(arr, n, 0, n-1, x);
+    if (finalAns == -1) {
+        cout << "Element not found";
+    }
+    else {
+        cout << finalAns;
+    }
 }
