@@ -1,0 +1,46 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+void dfs(vector<int> adj[], int u, vector<bool>& visited, stack<int>& st) {
+    visited[u] = true;
+    for(auto &x: adj[u]) {
+        if (!visited[x]) {
+            dfs(adj, x, visited, st);
+        }
+    }
+    st.push(u);
+}
+
+vector<int> topoSort(int V, vector<int> adj[]) {
+    vector<bool> visited(V, 0);
+    vector<int> result;
+    stack<int> st;
+    for(int i = 0; i < V; i++) {
+        if (!visited[i]) {
+            dfs(adj, i, visited, st);
+        }
+    }
+    while(!st.empty()) {
+        result.push_back(st.top());
+        st.pop();
+    }
+    return result;
+}
+
+int main() {
+    int V, E;
+    cin >> V;
+    cin >> E;
+    vector<int> adj[V];
+    for(int i = 0; i < E; i++) {
+        int from, to;
+        cin >> from >> to;
+        adj[from].push_back(to);
+    }
+    vector<int> finalAns = topoSort(V, adj);
+    for (int vertex : finalAns)
+    {
+        cout << vertex << " ";
+    }
+    cout << endl;
+}
