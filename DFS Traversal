@@ -1,0 +1,50 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+void dfs(unordered_map<int, vector<int>>& mp, int u, vector<bool>& visited, vector<int>& result) {
+    if (visited[u] == true) {
+        return ;
+    }
+    visited[u] = true;
+    result.push_back(u);
+    for(auto x: mp[u]) {
+        if (!visited[x]) {
+            dfs(mp, x, visited, result);
+        }
+    }
+}
+
+vector<int> dfsOfGraph(int V, vector<int> adj[]) {
+    vector<int> result;
+    vector<bool> visited(V, false);
+    unordered_map<int, vector<int>> mp;
+    for(int u = 0; u < V; u++) {
+        for(auto v: adj[u]) {
+            mp[u].push_back(v);
+        }
+    }
+    dfs(mp, 0, visited, result);
+    return result;
+}
+
+int main() {
+    int V, E; 
+    cin >> V;
+    cin >> E;
+
+    vector<int> adj[V];
+    for (int i = 0; i < E; i++) {
+        int u, v;
+        cin >> u >> v;
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+
+    vector<int> result = dfsOfGraph(V, adj);
+    for (int node : result) {
+        cout << node << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
