@@ -1,0 +1,173 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+class Node {
+    public:
+    int data;
+    Node* prev;
+    Node* next;
+
+    Node(int d) {
+        this->data = d;
+        this->prev = nullptr;
+        this->next = nullptr;
+    } 
+
+    ~Node() {
+        int val = this->data;
+        if (next != nullptr) {
+            delete next;
+            next = nullptr;
+        }
+        cout << "Memory free for node with data " << val << endl;
+    }
+};
+
+// Print nodes of DLL
+void print(Node* head) {
+    Node* temp = head;
+    while(temp != nullptr) {
+        cout << temp->data << " ";
+        temp = temp->next;
+    }
+    cout << endl;
+}
+
+// Length of the Doubly Linked List
+int getLength(Node* head) {
+    Node* temp = head;
+    int len = 0;
+    while(temp != nullptr) {
+        len++;
+        temp = temp->next;
+    }
+    return len;
+}
+
+// Insertion at head in DLL
+void insertAtHead(Node* &head, Node* &tail, int d) {
+    if (head == nullptr) {
+        Node* temp = new Node(d);
+        head = temp;
+        tail = temp;
+    }
+    else {
+        Node* temp = new Node(d);
+        temp->next = head;
+        head->prev = temp;
+        head = temp;
+    }
+
+}
+
+// Insertion at tail in DLL
+void insertAtTail(Node* &head, Node* &tail, int d) {
+    if (tail == nullptr) {
+        Node* temp = new Node(d);
+        tail = temp;
+        head = temp;
+    }
+    else {
+        Node* temp = new Node(d);
+        tail->next = temp;
+        temp->prev = tail;
+        tail = temp;
+    }
+
+}
+
+// Insert at any position in DLL
+void insertAtPosition(Node* &head, Node* &tail, int position, int d) {
+    int len = getLength(head);
+
+    if (position < 1 || position > len + 1) {
+        cout << "Invalid position" << endl;
+        return;
+    }
+
+    if (position == 1) {
+        insertAtHead(head, tail, d);
+        return;
+    }
+
+    if (position == len + 1) {
+        insertAtTail(head, tail, d);
+        return;
+    }
+
+    Node* temp = head;
+    int cnt = 1;
+
+    while (cnt < position - 1) {
+        temp = temp->next;
+        cnt++;
+    }
+
+    Node* nodeToInsert = new Node(d);
+    nodeToInsert->next = temp->next;
+    nodeToInsert->prev = temp;
+    
+    if (temp->next != nullptr) {
+        temp->next->prev = nodeToInsert;
+    }
+    temp->next = nodeToInsert;
+}
+
+void deleteNode(int position, Node* &head) {
+    if (position == 1) {
+        Node* temp = head;
+        temp->next->prev = nullptr;
+        head = temp->next;
+        temp->next = nullptr;
+        delete temp;
+    }
+    else {
+        Node* curr = head;
+        Node* prev = nullptr;
+        int cnt = 1;
+        while(cnt < position) {
+            prev = curr;
+            curr = curr->next;
+            cnt++;
+        }
+        curr->prev = nullptr;
+        prev->next = curr->next;
+        curr->next = nullptr;
+        delete curr;
+    }
+    
+}
+
+
+int main() {
+    Node* head = nullptr;
+    Node* tail = nullptr;
+
+    print(head);
+    cout << getLength(head) << endl;
+
+    insertAtHead(head, tail, 11);
+    print(head);
+
+    insertAtHead(head, tail, 8);
+    print(head);
+
+    insertAtTail(head, tail, 25);
+    print(head);
+
+    insertAtPosition(head, tail, 2, 100);
+    print(head);
+
+    insertAtPosition(head, tail, 1, 101);
+    print(head);
+
+    insertAtPosition(head, tail, 8, 102);
+    print(head);
+
+    cout << getLength(head) << endl;
+
+    deleteNode(3, head);
+    print(head);
+    cout << "head " << head->data << endl;
+    cout << "tail " << tail->data << endl;
+}
