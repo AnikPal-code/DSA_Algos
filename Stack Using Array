@@ -1,5 +1,4 @@
 #include<iostream>
-#include<stack>
 using namespace std;
 
 class Stack {
@@ -15,11 +14,10 @@ class Stack {
     }
 
     void push(int element) {
-        if (size-top > 1) {
+        if (size - top > 1) {
             top++;
             arr[top] = element;
-        }
-        else {
+        } else {
             cout << "Stack Overflown" << endl;
         }
     }
@@ -27,8 +25,7 @@ class Stack {
     void pop() {
         if (top >= 0) {
             top--;
-        }
-        else {
+        } else {
             cout << "Stack Underflown" << endl;
         }
     }
@@ -36,19 +33,29 @@ class Stack {
     int peek() {
         if (top >= 0) {
             return arr[top];
-        }
-        else {
+        } else {
             cout << "Stack is Empty" << endl;
             return -1;
         }
     }
 
+    void printElements() {
+        if (top >= 0) {
+            cout << "Stack elements are: ";
+            for (int i = top; i >= 0; i--) {
+                cout << arr[i] << " ";
+            }
+            cout << endl;
+        } else {
+            cout << "Stack is Empty" << endl;
+        }
+    }
+
     bool isEmpty() {
         if (top == -1) {
-            cout << "Stack is Empty";
-        }
-        else {
-            return "Stack is not Empty";
+            return true;
+        } else {
+            return false;
         }
     }
 };
@@ -59,16 +66,19 @@ int main() {
     st.push(33);
     st.push(44);
 
-    cout << st.isEmpty() << endl;
-    cout << st.peek() << endl;
+    st.printElements();
+
+    cout << "Is stack empty? " << (st.isEmpty() ? "Yes" : "No") << endl;
+
+    cout << "Top element: " << st.peek() << endl;
     st.pop();
-    cout << "After popping" << endl;
-    cout << st.peek() << endl;
+    cout << "After popping, top element: " << st.peek() << endl;
     st.pop();
-    cout << "After popping" << endl;
-    cout << st.peek() << endl;
+    cout << "After popping, top element: " << st.peek() << endl;
     st.pop();
-    cout << "After popping" << endl;
-    cout << st.peek() << endl;
-    cout << st.isEmpty() << endl;
+    cout << "After popping, top element: " << st.peek() << endl;
+
+    cout << "Is stack empty? " << (st.isEmpty() ? "Yes" : "No") << endl;
+
+    return 0;
 }
