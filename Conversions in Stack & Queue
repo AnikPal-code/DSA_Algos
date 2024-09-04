@@ -1,0 +1,166 @@
+Time complexity = O(2*N)
+Space complexity = O(2*N)
+infixToPostfix(s) { 
+    i = 0, st, ans = "";
+
+    while(i < n) {
+        if (operand) { // A to Z or a to z or 1 to 9
+            ans += s[i];
+        }   
+        else if(opening bracket) {
+            st.push(s[i]);
+        }
+        else if(closing bracket) {
+            while(!st.empty() && st.top() != opening bracket) {
+                ans += st.top();
+                st.pop();
+            }
+            st.pop();
+        }
+        else {
+            if (s[i] == '^') {
+                while(!st.empty() && priority(s[i]) <= priority(st.top())) {
+                    ans += st.top();
+                    st.pop();
+                }
+            }
+            st.push(s[i]);
+        }
+        i++;
+    }
+    while(!st.empty()) {
+        ans += st.top();
+        st.pop();
+    }
+    return ans;
+} 
+
+Time complexity = O(N/2) + O(N/2) + O(2*N) = O(3*N)
+
+Space complexity = O(2*N)
+infixToPrefix(s) {
+    s = reverse(s)
+    i = 0, st, ans = "";
+
+    while(i < n) {
+        if (operand) { // A to Z or a to z or 1 to 9
+            ans += s[i];
+        }   
+        else if(opening bracket) {
+            st.push(s[i]);
+        }
+        else if(closing bracket) {
+            while(!st.empty() && st.top() != opening bracket) {
+                ans += st.top();
+                st.pop();
+            }
+            st.pop();
+        }
+        else {
+            if (s[i] == '^') {
+                while(!st.empty() && priority(s[i]) <= priority(st.top())) {
+                    ans += st.top();
+                    st.pop();
+                }
+            }
+            else {
+                while(!st.empty() && priority(s[i]) <= priority(st.top())) {
+                    ans += st.top();
+                    st.pop();
+                }
+            }
+            st.pop();
+        }
+        i++;
+    }
+    while(!st.empty()) {
+        ans += st.top();
+        st.pop();
+    }
+    ans = reverse(ans);
+    return ans;
+}
+
+Time complexity = O(N) + O(N)
+Space complexity = O(N)
+postfixToInfix(s) {
+    i = 0, stack<string> st;
+    while(i < N) {
+        if (operand) {
+            st.push(s[i]);
+        }
+        else {
+            t1 = st.top();
+            st.pop();
+            t2 = st.top();
+            st.pop();
+
+            converted = '(' + t2 + s[i] + t1 + ')'
+            st.push(converted)
+        }
+        i++;
+    }
+    return st.top();
+}
+
+Time complexity = O(N) + O(N)
+Space complexity = O(N)
+prefixToInfix(s) {
+    i = N-1, stack<string> st;
+    while(i >= 0) {
+        if (operand) {
+            st.push(s[i]);
+        }
+        else {
+            t1 = st.top();
+            st.pop();
+            t2 = st.top();
+            st.pop();
+            converted = '(' + t1 + s[i] + t2 + ')'
+            st.push(converted);
+        }
+        i--;
+    }
+    return st.top();
+}
+
+Time complexity = O(N) + O(N)
+Space complexity = O(N)
+postfixToPrefix(s) {
+    i = 0, stack<string> st;
+    while(i < N) {
+        if (operand) {
+            st.push(s[i]);
+        }
+        else {
+            t1 = st.top();
+            st.pop();
+            t2 = st.top();
+            st.pop();
+            st.push(s[i] + t2 + t1);
+        }
+        i++;
+    }
+    return st.top();
+}
+
+Time complexity = O(N) + O(N)
+Space complexity = O(N)
+prefixToPostfix(s) {
+    i = N-1, stack<string> st;
+    whiel(i >= 0) {
+        if (operand) {
+            st.push(s[i]);
+        }
+        else {
+            t1 = st.top();
+            st.pop();
+            t2 = st.top();
+            st.pop();
+
+            st.push(t1 + t2 + s[i]);
+        }
+        i--;
+    }
+    return st.top
+}
