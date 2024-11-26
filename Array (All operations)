@@ -1,0 +1,103 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+const int MAX_SIZE = 100;
+
+void displayArray(int arr[], int size) {
+    for(int i = 0; i < size; i++) {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+}
+
+void insertAtHead(int arr[], int &size, int value) {
+    if (size >= MAX_SIZE) {
+        cout << "Array is full" << endl;
+    }
+    for(int i = size; i > 0; i--) {
+        arr[i] = arr[i-1];
+    }
+    arr[0] = value;
+    size++;
+}
+
+void insertAtEnd(int arr[], int &size, int value) {
+    if (size >= MAX_SIZE) {
+        cout << "Array is full" << endl;
+    }
+    arr[size] = value;
+    size++;
+}
+
+void insertAtMiddle(int arr[], int &size, int value, int position) {
+    if (size >= MAX_SIZE) {
+        cout << "Array is full" << endl;
+    }
+    if (position == 0) insertAtHead(arr, size, value);
+    if (position == size) insertAtEnd(arr, size, value);
+    if (position < 0 || position > size) {
+        cout << "Invalid positions" << endl;
+    }
+    for(int i = size; i > position; i--) {
+        arr[i] = arr[i-1];
+    }
+    arr[position] = value;
+}
+
+void deleteAtHead(int arr[], int &size) {
+    if (size <= 0) {
+        cout << "Array is empty" << endl;
+    }
+    for(int i = 0; i < size-1; i++) {
+        arr[i] = arr[i+1];
+    }
+    size--;
+}
+
+void deleteAtEnd(int arr[], int &size) {
+    if (size <= 0) {
+        cout << "Array is empty" << endl;
+    }
+    size--;
+}
+
+void deleteAtMiddle(int arr[], int &size, int position) {
+    if (size <= 0) {
+        cout << "Array is emtpy" << endl;
+    }
+    if (position < 0 || position > size) {
+        cout << "Invalid position" << endl;
+    }
+    for(int i = position; i < size; i++) {
+        arr[i] = arr[i+1];
+    }
+    size--;
+}
+
+int main() {
+    int arr[MAX_SIZE];
+    int size = 0;
+
+    // Insertions
+    insertAtEnd(arr, size, 10);
+    insertAtEnd(arr, size, 20);
+    insertAtEnd(arr, size, 30);
+    displayArray(arr, size);
+
+    insertAtHead(arr, size, 5);
+    displayArray(arr, size);
+
+    insertAtMiddle(arr, size, 15, 2);
+    displayArray(arr, size);
+    
+    deleteAtHead(arr, size);
+    displayArray(arr, size);
+
+    deleteAtMiddle(arr, size, 1);
+    displayArray(arr, size);
+
+    deleteAtEnd(arr, size);
+    displayArray(arr, size);
+
+    return 0;
+}
